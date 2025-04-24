@@ -1,0 +1,32 @@
+📚 GDPR (EU)
+🔐 "What are the notification requirements for a personal data breach under GDPR?"
+
+🕵️‍♂️ "When is a Data Protection Impact Assessment required?"
+
+📤 "Can personal data be transferred outside the EU?"
+
+👤 "What are the rights of a data subject?"
+
+📝 "What should be included in a privacy notice under GDPR?"
+
+🇺🇸 CPPA (California)
+💬 "What rights do consumers have under the CPPA?"
+
+🔄 "Can a business share data with third parties under CPPA?"
+
+🕓 "How soon must a company respond to a data access request?"
+
+🏛 ISO/IEC 27001
+🛡 "What are the requirements for access control in ISO 27001?"
+
+🔄 "Describe the purpose of Annex A in ISO 27001."
+
+🔐 "How is data encryption addressed in ISO 27001?"
+
+🇺🇸 NIST SP 800-53 or 800-171
+💼 "What are NIST's guidelines on risk assessment?"
+
+🛡️ "What security controls are required for federal contractors?"
+
+🔍 "Describe the NIST requirement for continuous monitoring."
+
