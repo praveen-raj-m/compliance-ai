@@ -1,0 +1,10 @@
+flask==2.3.3
+flask-cors==4.0.0
+qdrant-client==1.7.0
+langchain==0.0.300
+sentence-transformers==2.2.2
+pypdf==3.17.1
+docx2txt==0.8
+numpy==1.25.2
+python-dotenv==1.0.0
+requests==2.31.0 

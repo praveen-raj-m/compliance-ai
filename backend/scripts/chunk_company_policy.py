@@ -14,7 +14,7 @@ rake = Rake()
 
 # Directory paths
 BASE_DIR = Path(__file__).resolve().parents[1]
-UPLOAD_DIR = BASE_DIR / "data" / "uploaded_docs"
+UPLOAD_DIR = BASE_DIR / "data" / "company_policies"
 OUT_DIR = BASE_DIR / "data" / "company_chunks"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 

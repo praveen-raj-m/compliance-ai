@@ -4,6 +4,7 @@ from pathlib import Path
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import PointStruct, VectorParams, Distance
+import uuid
 
 # === Config ===
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -36,7 +37,7 @@ def embed_and_store(filepath):
     vectors = model.encode(texts, normalize_embeddings=True)
 
     points = [
-        PointStruct(id=r["id"], vector=vec.tolist(), payload=r)
+        PointStruct(id=str(uuid.uuid4()), vector=vec.tolist(), payload=r)
         for r, vec in zip(records, vectors)
     ]
 

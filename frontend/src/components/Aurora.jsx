@@ -430,7 +430,7 @@ export default function Aurora({
           animateBy="words"
           direction="top"
           onAnimationComplete={handleAnimationComplete}
-          className="text-3xl font-semibold mb-8 text-white"
+          className="text-5xl font-semibold mb-8 text-white"
         />
       </div>
     </div>

@@ -82,6 +82,8 @@
 import json
 from pathlib import Path
 import subprocess
+import argparse
+import re
 
 # === CONFIG ===
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -92,7 +94,7 @@ MAX_ARTICLES = 20  # Optional limit to reduce context length
 
 def load_chunks(path, max_chunks=None):
     chunks = []
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, "r", encoding="utf-8-sig", errors="replace") as f:
         for line in f:
             r = json.loads(line)
             entry = {
@@ -151,24 +153,34 @@ def query_llm(prompt, model):
     output, _ = process.communicate(input=prompt)
     return output.strip()
 
+# 
 if __name__ == "__main__":
-    reg_input = input("📚 Regulation to compare (e.g., GDPR, ISO27001): ").strip().upper().replace(" ", "_")
-    model = input("🤖 Model to use (e.g., nous-hermes2): ").strip() or DEFAULT_MODEL
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--policy", required=True, help="Path to company policy JSONL file")
+    parser.add_argument("--standard", required=True, help="Regulation name (e.g. GDPR)")
+    parser.add_argument("--llm", default=DEFAULT_MODEL, help="Local LLM to use (e.g. llama3)")
+    parser.add_argument("--quiet", action="store_true", help="Suppress logs, return only LLM response")
 
-    comp_file = next(COMPANY_DIR.glob("*.jsonl"), None)
+    args = parser.parse_args()
+
+    reg_input = args.standard.strip().upper().replace(" ", "_")
+    model = args.llm
+    comp_file = Path(args.policy)
     reg_file = REG_DIR / f"{reg_input}.jsonl"
 
-    if not comp_file or not reg_file.exists():
+    if not comp_file.exists() or not reg_file.exists():
         print("❌ Required files not found.")
         exit()
 
     print("📥 Loading chunks...")
     company_chunks = load_chunks(comp_file)
     regulation_chunks = load_chunks(reg_file, max_chunks=MAX_ARTICLES)
+ 
 
     prompt = build_prompt(company_chunks, regulation_chunks, reg_input)
 
-    print("\n🚀 Querying LLM via Ollama...\n")
     response = query_llm(prompt, model)
-    print("\n✅ LLM Response:\n")
+    cleaned = re.sub(r"\*\*(.*?)\*\*", r"\1", response)  # remove bold
+    cleaned = re.sub(r'[\U00010000-\U0010FFFF]', '', cleaned)
+
     print(response)
